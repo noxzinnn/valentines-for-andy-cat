@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@400;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a0a10, #2d1020, #1a0a10);
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .page {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .page.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+            animation: fadeInCinematic 1s ease forwards;
+        }
+
+        @keyframes fadeInCinematic {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Cinematic vignette overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Ambient light glow */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, rgba(255, 105, 180, 0.15) 0%, transparent 50%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: ambientGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes ambientGlow {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        h1, h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.4), 2px 2px 10px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            animation: textGlow 3s ease-in-out infinite;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffb6c1;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.4), 2px 2px 10px rgba(0, 0, 0, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(255, 105, 180, 1), 0 0 60px rgba(255, 105, 180, 0.6), 0 0 80px rgba(255, 20, 147, 0.4), 2px 2px 10px rgba(0, 0, 0, 0.5); }
+        }
+
+        .initials {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5rem;
+            color: #ff1493;
+            text-shadow: 0 0 30px rgba(255, 20, 147, 0.8), 0 0 60px rgba(255, 20, 147, 0.5), 0 0 90px rgba(255, 105, 180, 0.3);
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s ease-in-out infinite, neonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .gif-container {
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .gif-container img {
+            max-width: 280px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(255, 20, 147, 0.5), 0 0 60px rgba(255, 105, 180, 0.3);
+            animation: floatImage 4s ease-in-out infinite;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(1deg); }
+            75% { transform: translateY(-5px) rotate(-1deg); }
+        }
+
+        /* Film grain effect */
+        .film-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.04;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+            animation: grain 0.5s steps(10) infinite;
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 0); }
+            60% { transform: translate(1%, 0); }
+            70% { transform: translate(0, 1%); }
+            80% { transform: translate(0, -1%); }
+            90% { transform: translate(1%, 1%); }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 45px;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.5), 0 0 40px rgba(255, 105, 180, 0.3);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.6), 0 0 60px rgba(255, 105, 180, 0.4);
+        }
+
+        /* Page 2 - Song Selection */
+        .song-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 25px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .song-item {
+            background: rgba(30, 15, 25, 0.9);
+            border: 2px solid rgba(255, 105, 180, 0.4);
+            border-radius: 15px;
+            padding: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.2), inset 0 0 30px rgba(255, 105, 180, 0.05);
+            cursor: pointer;
+        }
+
+        .song-item:hover {
+            transform: scale(1.02) translateY(-5px);
+            border-color: #ff1493;
+            box-shadow: 0 10px 40px rgba(255, 20, 147, 0.4), inset 0 0 30px rgba(255, 105, 180, 0.1);
+        }
+
+        .song-item.selected {
+            border-color: #ff1493;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.2), rgba(255, 105, 180, 0.1));
+            box-shadow: 0 6px 30px rgba(255, 20, 147, 0.5), 0 0 60px rgba(255, 105, 180, 0.2);
+        }
+
+        .song-item iframe {
+            border-radius: 12px;
+            pointer-events: auto;
+        }
+
+        .song-select-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        .song-select-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 25px rgba(255, 20, 147, 0.5);
+        }
+
+        .song-item.selected .song-select-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .song-btn {
+            background: rgba(30, 15, 25, 0.9);
+            border: 2px solid rgba(255, 105, 180, 0.4);
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffb6c1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .song-btn:hover {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .song-btn.selected {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Flashcard Styles */
+        .flashcards-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 40px;
+        }
+
+        .flashcard {
+            perspective: 1000px;
+            height: 480px;
+            min-width: 400px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(255, 20, 147, 0.35), 0 0 50px rgba(255, 105, 180, 0.2);
+            border: 3px solid rgba(255, 105, 180, 0.5);
+            overflow: hidden;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, rgba(40, 20, 35, 0.95), rgba(30, 15, 25, 0.95));
+        }
+
+        .flashcard-front h3 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .flashcard-front .tap-hint {
+            font-size: 1rem;
+            color: rgba(255, 182, 193, 0.6);
+            margin-top: 15px;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.15), rgba(40, 20, 35, 0.95));
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-back img {
+            width: 100%;
+            height: 65%;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .flashcard-back p {
+            font-family: 'Quicksand', sans-serif;
+            color: #ffb6c1;
+            font-size: 1.1rem;
+            text-align: center;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+
+        /* Page 3 - Yes/No Buttons */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        #yes-btn {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            box-shadow: 0 6px 30px rgba(255, 20, 147, 0.6), 0 0 60px rgba(255, 105, 180, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #yes-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 50px rgba(255, 20, 147, 0.7), 0 0 80px rgba(255, 105, 180, 0.4);
+        }
+
+        #no-btn {
+            background: linear-gradient(135deg, rgba(100, 100, 100, 0.5), rgba(80, 80, 80, 0.5));
+            color: #999;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: 1px solid rgba(150, 150, 150, 0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        #no-btn:hover {
+            background: linear-gradient(135deg, rgba(120, 120, 120, 0.5), rgba(100, 100, 100, 0.5));
+        }
+
+        /* Hearts Background */
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: fall linear infinite;
+            opacity: 0.5;
+            filter: blur(1px);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Particle sparkles */
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #ff69b4;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 3s ease-in-out infinite;
+            box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Lyrics Display */
+        .lyrics-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            max-height: 200px;
+            background: rgba(30, 15, 25, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 30px rgba(255, 105, 180, 0.3), 0 0 40px rgba(255, 20, 147, 0.2);
+            border: 2px solid rgba(255, 105, 180, 0.4);
+            overflow: hidden;
+            display: none;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+        }
+
+        .lyrics-container.active {
+            display: block;
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .lyrics-title {
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .lyrics-text {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(150, 150, 150, 0.8);
+            line-height: 1.8;
+            max-height: 140px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .lyrics-text .word {
+            display: inline;
+            transition: all 0.15s ease;
+        }
+
+        .lyrics-text .word.highlighted {
+            color: #ff1493;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 20, 147, 0.8), 0 0 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .lyrics-text .word.sung {
+            color: #ff69b4;
+            font-weight: 600;
+        }
+
+        .lyrics-text .line-break {
+            display: block;
+            height: 8px;
+        }
+
+        /* Music note icon */
+        .music-note {
+            position: fixed;
+            bottom: 180px;
+            right: 30px;
+            font-size: 2rem;
+            animation: bounce 1s ease infinite, noteGlow 2s ease-in-out infinite;
+            display: none;
+            z-index: 51;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+        }
+
+        .music-note.active {
+            display: block;
+        }
+
+        @keyframes noteGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255, 20, 147, 1)); }
+        }
+
+        /* Spotify Player */
+        .spotify-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 350px;
+            background: rgba(30, 15, 25, 0.95);
+            border-radius: 15px;
+            padding: 12px;
+            box-shadow: 0 4px 30px rgba(255, 105, 180, 0.3), 0 0 40px rgba(255, 20, 147, 0.2);
+            border: 2px solid rgba(255, 105, 180, 0.4);
+            display: none;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .spotify-player.active {
+            display: block;
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .spotify-player-title {
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite, textGlow 3s ease-in-out infinite;
+        }
+
+        /* Page transition message */
+        .page-transition-text {
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: fadeInText 1.5s ease 0.5s forwards;
+        }
+
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+
+        /* Final message styles */
+        .time-message {
+            margin-top: 30px;
+            font-family: 'Quicksand', sans-serif;
+            color: rgba(255, 182, 193, 0.8);
+            font-size: 1rem;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeInSlow 2s ease 1s forwards;
+        }
+
+        @keyframes fadeInSlow {
+            to { opacity: 1; }
+        }
+
+        /* Password Page Styles */
+        .password-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .password-input {
+            background: rgba(30, 15, 25, 0.9);
+            border: 2px solid rgba(255, 105, 180, 0.4);
+            border-radius: 15px;
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            color: #ffb6c1;
+            font-family: 'Quicksand', sans-serif;
+            text-align: center;
+            width: 300px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.2), inset 0 0 30px rgba(255, 105, 180, 0.05);
+        }
+
+        .password-input::placeholder {
+            color: rgba(255, 182, 193, 0.5);
+        }
+
+        .password-input:focus {
+            border-color: #ff1493;
+            box-shadow: 0 6px 30px rgba(255, 20, 147, 0.4), inset 0 0 30px rgba(255, 105, 180, 0.1);
+        }
+
+        .password-error {
+            color: #ff6b6b;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            height: 0;
+            margin: 0;
+        }
+
+        .password-error.visible {
+            opacity: 1;
+            height: auto;
+        }
+
+        .password-hint {
+            margin-top: 40px;
+            font-family: 'Quicksand', sans-serif;
+            color: rgba(255, 182, 193, 0.7);
+            font-size: 1rem;
+            font-style: italic;
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .initials {
+                font-size: 2.5rem;
+            }
+            .gif-container img {
+                max-width: 220px;
+            }
+            .lyrics-container {
+                width: 250px;
+                right: 10px;
+                bottom: 10px;
+                max-height: 180px;
+            }
+            .spotify-player {
+                width: 280px;
+                left: 10px;
+                bottom: 10px;
+            }
+            .song-list {
+                max-width: 320px;
+            }
+            .flashcards-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                max-width: 90vw;
+                padding: 0 20px;
+            }
+            .flashcard {
+                height: 420px;
+                min-width: unset;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="film-grain"></div>
+    <div class="hearts" id="hearts"></div>
+
+    <!-- Page 1: Welcome -->
+    <div class="page active" id="page1">
+        <h1>Welcome my love, Cat!</h1>
+        <h2>Ready for this journey?</h2>
+        <div class="gif-container">
+            <img src="https://media1.tenor.com/m/9FaSWk7vzDMAAAAC/hello-kitty-hearts.gif" alt="Hello Kitty Wink">
+        </div>
+        <button class="btn" onclick="goToPage(2)">Next</button>
+    </div>
+
+    <!-- Page 2: Password -->
+    <div class="page" id="page2">
+        <h1>Put the password to proceed!</h1>
+        <div class="password-container">
+            <input type="text" id="passwordInput" class="password-input" placeholder="Enter password..." autocomplete="off">
+            <p class="password-error" id="passwordError">Wrong password, try again!</p>
+            <button class="btn" onclick="checkPassword()">Submit</button>
+        </div>
+        <p class="password-hint">Name of the animal you pet alot... (need more hints? give me a smooch over audio.)</p>
+    </div>
+
+    <!-- Page 3: Song Selection -->
+    <div class="page" id="page3">
+        <h1>Songs that I like that remind me of you!</h1>
+        <h2>Pick one for our journey</h2>
+        <div class="song-list">
+            <div class="song-item" id="song0">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0sPJELXHyWpFgkxlzvvRFI?utm_source=generator&theme=0" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <button class="song-select-btn" onclick="selectSong(0)">Select This Song</button>
+            </div>
+            <div class="song-item" id="song1">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3WQBER5AAfw8sMrQczAw95?utm_source=generator&theme=0" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <button class="song-select-btn" onclick="selectSong(1)">Select This Song</button>
+            </div>
+            <div class="song-item" id="song2">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7tzeZLMnqlke2raEMeDZ9S?utm_source=generator&theme=0" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <button class="song-select-btn" onclick="selectSong(2)">Select This Song</button>
+            </div>
+        </div>
+        <button class="btn" onclick="goToPage(4)" id="nextFromSongs" style="opacity: 0.5; pointer-events: none;">Next</button>
+    </div>
+
+    <!-- Page 4: Things We Like In Common -->
+    <div class="page" id="page4">
+        <h1>Things We Like In Common</h1>
+        <h2>Tap to flip!</h2>
+        <div class="flashcards-container">
+            <div class="flashcard" onclick="flipCard(this)">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <h3>Volleyball Legends</h3>
+                        <p class="tap-hint">Tap to flip</p>
+                    </div>
+                    <div class="flashcard-back">
+                        <img src="https://static.beebom.com/wp-content/uploads/2025/01/Haikyuu-Legends-Roblox-banner.jpg?w=1250&quality=75" alt="Haikyuu">
+                        <p>even if we get mad sometimes we still have fun together, am i wrong?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="flipCard(this)">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <h3>Music</h3>
+                        <p class="tap-hint">Tap to flip</p>
+                    </div>
+                    <div class="flashcard-back">
+                        <img src="https://image.spreadshirtmedia.net/image-server/v1/products/T1459A839PA4459PT28X0Y22D308504383W10000H5580/views/1,width=550,height=550,appearanceId=839,backgroundColor=F2F2F2/r-b-sticker.jpg" alt="R&B">
+                        <p>Well we dont have 1 on 1 taste but we do have some songs we both like.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="flipCard(this)">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <h3>Love</h3>
+                        <p class="tap-hint">Tap to flip</p>
+                    </div>
+                    <div class="flashcard-back">
+                        <img src="https://media.tenor.com/Dlrm6EHTvtMAAAAM/hanhcutis112233.gif" alt="Love">
+                        <p>We have the common issue of being so much in love with eachother!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="flipCard(this)">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <h3>Lazy</h3>
+                        <p class="tap-hint">Tap to flip</p>
+                    </div>
+                    <div class="flashcard-back">
+                        <img src="https://i.pinimg.com/originals/4e/34/e7/4e34e7ee1547d5cb8d24a238d5120d73.jpg" alt="Lazy">
+                        <p>We both lazy alot. I skip school, training etc.. While you? Tell me about it!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn" onclick="goToPage(5)">Next</button>
+    </div>
+
+    <!-- Page 5: Valentine's Question -->
+    <div class="page" id="page5">
+        <h1 class="pulse">Will you be my Valentine, babe?</h1>
+        <div class="gif-container">
+            <img src="https://media1.tenor.com/m/gun0sHc3R28AAAAC/shanelle-hello-kitty.gif" alt="Hello Kitty Kiss">
+        </div>
+        <div class="buttons-container">
+            <button id="yes-btn" onclick="sayYes()">Yes</button>
+            <button id="no-btn" onclick="sayNo()">No</button>
+        </div>
+    </div>
+
+    <!-- Page 6: Success / Yay -->
+    <div class="page" id="page6">
+        <div class="initials">A x C</div>
+        <h1>Yay! I knew it!</h1>
+        <div class="gif-container">
+            <img src="https://media1.tenor.com/m/PU9JhYM7_78AAAAC/sanrio-hello-kitty.gif" alt="Sanrio Hello Kitty">
+        </div>
+        <button class="btn" onclick="goToPage(7)">DUH?</button>
+    </div>
+
+    <!-- Page 7: Final Page -->
+    <div class="page" id="page7">
+        <div class="initials">A x C</div>
+        <h1>See you next Valentine's then!</h1>
+        <h2>And let's enjoy this journey together!</h2>
+        <div class="gif-container">
+            <img src="https://media1.tenor.com/m/ctWNnwM83yYAAAAC/hello-kitty-umbrella.gif" alt="Hello Kitty Umbrella">
+        </div>
+        <p class="time-message">This took me a long time...</p>
+    </div>
+
+    <!-- Lyrics Display -->
+    <div class="music-note" id="musicNote">🎵</div>
+    <div class="lyrics-container" id="lyricsContainer">
+        <div class="lyrics-title" id="lyricsTitle">Now Playing</div>
+        <div class="lyrics-text" id="lyricsText"></div>
+    </div>
+
+    <!-- Spotify Player -->
+    <div class="spotify-player" id="spotifyPlayer">
+        <div class="spotify-player-title">🎵 Now Playing</div>
+        <iframe id="spotifyEmbed" style="border-radius:12px" src="" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+
+    <script>
+        // Song data with lyrics
+        const songs = [
+            {
+                name: "Hard 2 Face Reality - Poo Bear, Justin Bieber",
+                url: "https://open.spotify.com/track/0sPJELXHyWpFgkxlzvvRFI",
+                embedUrl: "https://open.spotify.com/embed/track/0sPJELXHyWpFgkxlzvvRFI?utm_source=generator&theme=0&autoplay=1&t=0",
+                lyrics: `Every moment with you feels like a dream
+The way you smile lights up my scene
+I never knew love could feel this way
+With you I want to forever stay
+
+Your laughter is my favorite sound
+In your eyes my heart is found
+Together we dance through the night
+With you everything feels right
+
+I'll hold your hand through every storm
+Your love keeps my heart so warm
+Forever and always, me and you
+This love we share is pure and true`
+            },
+            {
+                name: "FIGURED YOU OUT - Devkota",
+                url: "https://open.spotify.com/track/3WQBER5AAfw8sMrQczAw95",
+                embedUrl: "https://open.spotify.com/embed/track/3WQBER5AAfw8sMrQczAw95?utm_source=generator&theme=0&autoplay=1&t=0",
+                lyrics: `When I see you my heart skips a beat
+You make my whole life feel complete
+Every second by your side
+Fills me up with joy and pride
+
+The stars align when you are near
+With you I have nothing to fear
+You're the melody to my song
+With you is where I belong
+
+Dancing through life hand in hand
+Together we'll forever stand
+My love for you grows every day
+In my heart you'll always stay`
+            },
+            {
+                name: "These Four Walls - Khamari",
+                url: "https://open.spotify.com/track/7tzeZLMnqlke2raEMeDZ9S",
+                embedUrl: "https://open.spotify.com/embed/track/7tzeZLMnqlke2raEMeDZ9S?utm_source=generator&theme=0&autoplay=1&t=0",
+                lyrics: `You are my sunshine on a cloudy day
+The one who takes my breath away
+In your arms I've found my home
+With you I'll never be alone
+
+Your kiss is sweeter than honey
+You make everything feel sunny
+Through thick and thin we'll make it through
+There's no one else I'd rather choose
+
+Our love story is just beginning
+With you my heart is always winning
+Forever yours, forever mine
+Our two hearts perfectly aligned`
+            }
+        ];
+
+        let selectedSong = null;
+        let currentPage = 1;
+        let songStartTime = null;
+        let lyricsInterval = null;
+        let currentWordIndex = 0;
+        let wordsArray = [];
+        let playerInitialized = false;
+
+        // Create falling hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['💕', '💖', '💗', '💓', '💝', '❤️', '🩷'];
+
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('span');
+                heart.className = 'heart';
+                heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        createHearts();
+
+        // Page navigation
+        function goToPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNum).classList.add('active');
+            currentPage = pageNum;
+
+            // Show lyrics from page 4 onwards if a song was selected
+            if (pageNum >= 4 && selectedSong !== null) {
+                showLyrics();
+            }
+        }
+
+        // Password check
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            const password = input.value.trim().toLowerCase();
+
+            if (password === 'mason') {
+                error.classList.remove('visible');
+                goToPage(3);
+            } else {
+                error.classList.add('visible');
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Allow pressing Enter to submit password
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+
+        // Song selection
+        function selectSong(index) {
+            const previousSong = selectedSong;
+            selectedSong = index;
+
+            // Update song item styles and button text
+            document.querySelectorAll('.song-item').forEach((item, i) => {
+                item.classList.remove('selected');
+                const btn = item.querySelector('.song-select-btn');
+                if (i === index) {
+                    item.classList.add('selected');
+                    btn.textContent = '✓ Selected';
+                } else {
+                    btn.textContent = 'Select This Song';
+                }
+            });
+
+            // Enable next button
+            const nextBtn = document.getElementById('nextFromSongs');
+            nextBtn.style.opacity = '1';
+            nextBtn.style.pointerEvents = 'auto';
+
+            // Initialize the Spotify player immediately if a different song is selected
+            if (previousSong !== index) {
+                initializePlayer();
+            }
+        }
+
+        // Initialize the Spotify player (only once per song selection)
+        function initializePlayer() {
+            if (selectedSong === null) return;
+
+            const spotifyPlayer = document.getElementById('spotifyPlayer');
+            const spotifyEmbed = document.getElementById('spotifyEmbed');
+
+            // Set up the persistent Spotify player
+            spotifyEmbed.src = songs[selectedSong].embedUrl;
+            spotifyPlayer.classList.add('active');
+            playerInitialized = true;
+
+            // Start tracking time for lyrics sync
+            songStartTime = Date.now();
+            currentWordIndex = 0;
+
+            // Prepare lyrics for word highlighting
+            prepareLyrics();
+
+            // Start the lyrics highlighting interval
+            if (lyricsInterval) {
+                clearInterval(lyricsInterval);
+            }
+            lyricsInterval = setInterval(updateLyricsHighlight, 350); // Update every 350ms for smooth highlighting
+        }
+
+        // Prepare lyrics as HTML with individual word spans
+        function prepareLyrics() {
+            if (selectedSong === null) return;
+
+            const lyricsText = document.getElementById('lyricsText');
+            const lyrics = songs[selectedSong].lyrics;
+
+            // Split lyrics into lines and then words
+            const lines = lyrics.split('\n');
+            let html = '';
+            wordsArray = [];
+
+            lines.forEach((line, lineIndex) => {
+                if (line.trim() === '') {
+                    html += '<span class="line-break"></span>';
+                } else {
+                    const words = line.split(/\s+/);
+                    words.forEach((word, wordIndex) => {
+                        if (word.trim()) {
+                            const wordId = `word-${wordsArray.length}`;
+                            html += `<span class="word" id="${wordId}">${word}</span> `;
+                            wordsArray.push(wordId);
+                        }
+                    });
+                    html += '<br>';
+                }
+            });
+
+            lyricsText.innerHTML = html;
+        }
+
+        // Update lyrics highlight based on elapsed time
+        function updateLyricsHighlight() {
+            if (songStartTime === null || wordsArray.length === 0) return;
+
+            const elapsed = Date.now() - songStartTime;
+            // Calculate which word should be highlighted based on time
+            // Assuming average song pace of ~2.5 words per second
+            const wordsPerSecond = 2.5;
+            const targetWordIndex = Math.floor((elapsed / 1000) * wordsPerSecond);
+
+            // Update highlighting up to the current word
+            if (targetWordIndex > currentWordIndex && currentWordIndex < wordsArray.length) {
+                for (let i = currentWordIndex; i < Math.min(targetWordIndex, wordsArray.length); i++) {
+                    const wordElement = document.getElementById(wordsArray[i]);
+                    if (wordElement) {
+                        // Remove highlight from previous word
+                        wordElement.classList.remove('highlighted');
+                        wordElement.classList.add('sung');
+                    }
+                }
+
+                currentWordIndex = Math.min(targetWordIndex, wordsArray.length);
+
+                // Highlight current word
+                if (currentWordIndex < wordsArray.length) {
+                    const currentWord = document.getElementById(wordsArray[currentWordIndex]);
+                    if (currentWord) {
+                        currentWord.classList.add('highlighted');
+                        currentWord.classList.remove('sung');
+
+                        // Scroll to keep current word visible
+                        const lyricsContainer = document.getElementById('lyricsText');
+                        const wordRect = currentWord.getBoundingClientRect();
+                        const containerRect = lyricsContainer.getBoundingClientRect();
+
+                        if (wordRect.bottom > containerRect.bottom - 20 || wordRect.top < containerRect.top + 20) {
+                            currentWord.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                }
+            }
+
+            // Loop lyrics when all words have been highlighted
+            if (currentWordIndex >= wordsArray.length) {
+                // Reset for looping
+                currentWordIndex = 0;
+                songStartTime = Date.now();
+
+                // Reset all words to unhighlighted state
+                wordsArray.forEach(wordId => {
+                    const wordElement = document.getElementById(wordId);
+                    if (wordElement) {
+                        wordElement.classList.remove('highlighted', 'sung');
+                    }
+                });
+            }
+        }
+
+        // Show lyrics and Spotify player
+        function showLyrics() {
+            if (selectedSong === null) return;
+
+            const lyricsContainer = document.getElementById('lyricsContainer');
+            const musicNote = document.getElementById('musicNote');
+            const lyricsTitle = document.getElementById('lyricsTitle');
+
+            lyricsTitle.textContent = songs[selectedSong].name;
+
+            // Only initialize player if not already done (keeps song playing)
+            if (!playerInitialized) {
+                initializePlayer();
+            } else {
+                // Just prepare the lyrics display if player is already running
+                prepareLyrics();
+            }
+
+            lyricsContainer.classList.add('active');
+            musicNote.classList.add('active');
+        }
+
+        // Yes/No button logic
+        let yesSize = 1.5;
+        let yesPadding = 20;
+
+        function sayNo() {
+            const yesBtn = document.getElementById('yes-btn');
+            const noBtn = document.getElementById('no-btn');
+
+            // Increase yes button size
+            yesSize += 0.5;
+            yesPadding += 10;
+
+            yesBtn.style.fontSize = yesSize + 'rem';
+            yesBtn.style.padding = yesPadding + 'px ' + (yesPadding * 2.5) + 'px';
+
+            // Shrink no button
+            const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+            if (currentNoSize > 8) {
+                noBtn.style.fontSize = (currentNoSize * 0.8) + 'px';
+                noBtn.style.padding = (parseFloat(window.getComputedStyle(noBtn).paddingTop) * 0.8) + 'px ' +
+                                      (parseFloat(window.getComputedStyle(noBtn).paddingLeft) * 0.8) + 'px';
+            }
+
+            // Fade and hide no button
+            if (yesSize > 3.5) {
+                noBtn.style.opacity = Math.max(0, 1 - (yesSize - 3.5) * 0.4);
+            }
+
+            if (yesSize > 5) {
+                noBtn.style.display = 'none';
+            }
+        }
+
+        function sayYes() {
+            goToPage(6);
+        }
+
+        // Flashcard flip function
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // Create sparkles effect
+        function createSparkles() {
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(sparkle);
+            }
+        }
+
+        createSparkles();
+    </script>
+</body>
+</html>
