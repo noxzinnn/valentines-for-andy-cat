@@ -877,6 +877,17 @@
         </div>
     </div>
 
+    <!-- Page 5b: Retry Page -->
+<div class="page" id="page5b">
+    <div class="initials">A x C</div>
+    <h1 class="pulse">Sowwiee! Retry!</h1>
+    <div class="gif-container">
+        <img src="https://media.tenor.com/2kYy7DWuR6AAAAAC/capoo-crying.gif" alt="Capoo Crying">
+    </div>
+    <h2>Try pressing no...</h2>
+    <button class="btn" onclick="goToPage(5)">Back</button>
+</div>
+
     <!-- Page 6: Success / Yay -->
     <div class="page" id="page6">
         <div class="initials">A x C</div>
@@ -1237,8 +1248,21 @@ Our two hearts perfectly aligned`
             }
         }
 
+       // function sayYes() {
+         //   goToPage(6); //
         function sayYes() {
-            goToPage(6);
+    const noBtn = document.getElementById('no-btn');
+
+    // Check if "No" button is still visible
+    const noVisible = window.getComputedStyle(noBtn).display !== 'none' && parseFloat(window.getComputedStyle(noBtn).opacity) > 0;
+
+    if (noVisible) {
+        goToPage('5b'); // go to the retry page
+    } else {
+        goToPage(6); // go to the success page
+    }
+}
+
         }
 
         // Flashcard flip function
